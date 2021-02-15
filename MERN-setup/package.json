@@ -2,7 +2,9 @@
 	"name": "mern-simple-setup",
 	"version": "1.0.0",
 	"description": "Simple setup for MERN Application",
-	"main": "main.js",
+	
+	"homepage": "https://github.com/shamahoque/mern-marketplace",
+  "main": "./dist/server.generated.js",
 	"author": "Neeraj Patil",
 	"license": "MIT",
 	"private": true,
