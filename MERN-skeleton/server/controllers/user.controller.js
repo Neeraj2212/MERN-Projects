@@ -11,8 +11,8 @@ const create = async (req, res, next) => {
 		});
 	} catch (err) {
 		return res.status(400).json({
-			err,
-			// error: errorHandler.getErrorMessage(err),
+			// err,
+			error: errorHandler.getErrorMessage(err),
 		});
 	}
 };
@@ -22,8 +22,8 @@ const list = async (req, res) => {
 		res.json(users);
 	} catch (err) {
 		return res.status(400).json({
-			err,
-			// error: errorHandler.getErrorMessage(err),
+			// err,
+			error: errorHandler.getErrorMessage(err),
 		});
 	}
 };
@@ -46,7 +46,7 @@ const userByID = async (req, res, next, id) => {
 
 const read = (req, res) => {
 	req.profile.password = undefined;
-	console.log(req.profile);
+	// console.log(req.profile);
 	return res.json(req.profile);
 };
 
