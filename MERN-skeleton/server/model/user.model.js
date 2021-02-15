@@ -35,7 +35,10 @@ UserSchema.path("password").validate(function (v) {
 UserSchema.methods = {
 	authenticate: async function (plainText) {
 		try {
-			return await bcrypt.compare(plainText, this.hashed_password);
+			// console.log(plainText);
+			let result = await bcrypt.compare(plainText, this.password);
+			// console.log(result);
+			return result;
 		} catch (error) {
 			console.log(error.message);
 			return false;
