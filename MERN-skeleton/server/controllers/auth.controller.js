@@ -2,7 +2,6 @@ import User from "../model/user.model";
 import jwt from "jsonwebtoken";
 import expressJwt from "express-jwt";
 import config from "../../config/config";
-import { ids } from "webpack";
 
 const signin = async (req, res) => {
 	try {
@@ -29,15 +28,18 @@ const signin = async (req, res) => {
 		res.status(401).json({ error: "Could not sign in" });
 	}
 };
+
 const signout = (req, res) => {
 	res.clearCookie("t");
 	res.status(200).json({ message: "signed out" });
 };
+
 const requireSignin = expressJwt({
 	secret: config.jwtSecret,
 	userProperty: "auth",
 	algorithms: ["sha1", "RS256", "HS256"],
 });
+
 const hasAuthorization = (req, res, next) => {
 	const authorized =
 		req.profile && req.auth && req.profile._id === req.auth._id;

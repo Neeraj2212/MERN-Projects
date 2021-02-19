@@ -7,13 +7,18 @@ import helmet from "helmet";
 import Template from "./../template";
 import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
+import devBundle from "./devBundle"; //in development mode only
+import path from "path";
+const CURRENT_WORKING_DIR = process.cwd();
 const app = express();
+devBundle.compile(app); //in development mode only
 
+app.use("/dist", express.static(path.join(CURRENT_WORKING_DIR, "dist")));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compress());
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors());
 app.use("/", authRoutes);
 app.use("/", userRoutes);
