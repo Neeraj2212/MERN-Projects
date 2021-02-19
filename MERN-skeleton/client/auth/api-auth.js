@@ -15,7 +15,7 @@ const signin = async (user) => {
 	}
 };
 
-const signoout = async () => {
+const signout = async () => {
 	try {
 		let response = await fetch("/auth/signout/", {
 			method: "GET",
@@ -26,4 +26,4 @@ const signoout = async () => {
 	}
 };
 
-export { signin, signoout };
+export { signin, signout };
