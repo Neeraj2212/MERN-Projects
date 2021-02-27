@@ -1,18 +1,19 @@
 import { signout } from "./api-auth";
 
-export default auth = {
+const auth = {
 	authenticate(jwt, cb) {
-		if (typeof window !== "undefined") {
-			localStorage.setItem(jwt, JSON.stringify(jwt));
-		}
+		if (typeof window !== "undefined")
+			localStorage.setItem("jwt", JSON.stringify(jwt));
 		cb();
 	},
-
 	isAuthenticated() {
+		// console.log("from local storage");
+		// console.log(localStorage.getItem("jwt"));
+
 		if (typeof window == "undefined") return false;
-		if (localStorage.getItem("jwt"))
+		if (localStorage.getItem("jwt")) {
 			return JSON.parse(localStorage.getItem("jwt"));
-		else return false;
+		} else return false;
 	},
 	clearJWT(cb) {
 		if (typeof window !== "undefined") localStorage.removeItem("jwt");
@@ -22,3 +23,5 @@ export default auth = {
 		});
 	},
 };
+
+export default auth;

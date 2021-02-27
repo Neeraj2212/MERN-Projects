@@ -12,6 +12,7 @@ import { Redirect } from "react-router";
 import { signin } from "./api-auth";
 import { makeStyles } from "@material-ui/core/styles";
 import theme from "./../theme";
+import auth from "./auth-helper";
 
 const useStyles = makeStyles({
 	card: {
@@ -64,7 +65,9 @@ const Signin = (props) => {
 			if (data.error) {
 				setValues({ ...values, error: data.error });
 			} else {
-				setValues({ ...values, error: "", redirectToReferrer: true });
+				auth.authenticate(data, () => {
+					setValues({ ...values, error: "", redirectToReferrer: true });
+				});
 			}
 		});
 	};
@@ -85,7 +88,7 @@ const Signin = (props) => {
 	}
 
 	return (
-		<form autoComplete="off">
+		<form>
 			<Card className={classes.card}>
 				<CardContent className={classes.cardContent}>
 					<Typography variant="h4" className={classes.title}>

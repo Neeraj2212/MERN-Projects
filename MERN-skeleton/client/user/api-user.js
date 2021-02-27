@@ -27,8 +27,9 @@ const list = async (signal) => {
 };
 
 const read = async (params, credentials, signal) => {
+	console.log(credentials);
 	try {
-		let response = await fetch("/api/user/" + params.userId, {
+		let response = await fetch("/api/users/" + params.userId, {
 			method: "GET",
 			signal: signal,
 			headers: {
