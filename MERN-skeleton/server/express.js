@@ -9,6 +9,18 @@ import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
 import devBundle from "./devBundle"; //in development mode only
 import path from "path";
+
+// modules for server side rendering
+import React from "react";
+import ReactDOMServer from "react-dom/server";
+import { StaticRouter } from "react-router-dom";
+import MainRouter from "./../client/MainRouter";
+import theme from "./../client/theme";
+
+import { ServerStyleSheets, ThemeProvider } from "@material-ui/core/styles";
+
+//end
+
 const CURRENT_WORKING_DIR = process.cwd();
 const app = express();
 devBundle.compile(app); //in development mode only
@@ -23,8 +35,28 @@ app.use(cors());
 app.use("/", authRoutes);
 app.use("/", userRoutes);
 
-app.get("/", (req, res) => {
-	res.status(200).send(Template());
+app.get("*", (req, res) => {
+	const sheets = new ServerStyleSheets();
+	const context = {};
+	const markup = ReactDOMServer.renderToString(
+		sheets.collect(
+			<StaticRouter location={req.url} context={context}>
+				<ThemeProvider theme={theme}>
+					<MainRouter />
+				</ThemeProvider>
+			</StaticRouter>
+		)
+	);
+	if (context.url) {
+		return res.redirect(303, context.url);
+	}
+	const css = sheets.toString();
+	res.status(200).send(
+		Template({
+			markup: markup,
+			css: css,
+		})
+	);
 });
 
 app.use((err, req, res, next) => {
