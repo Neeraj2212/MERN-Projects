@@ -58,6 +58,7 @@ UserSchema.methods = {
 };
 
 UserSchema.pre("save", async function (next) {
+	if (!this.isModified("password")) return next(); // Run only when password field is changed
 	this.password = await this.encryptPassword(this.password);
 	next();
 });

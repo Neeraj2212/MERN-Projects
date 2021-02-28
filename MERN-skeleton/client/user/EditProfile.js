@@ -93,18 +93,28 @@ const EditProfile = ({ match }) => {
 		setValues({ ...values, [name]: event.target.value });
 	};
 
+	const checkUndefined = (obj) => {
+		Object.keys(obj).forEach((key) => {
+			if (obj[key] === undefined) {
+				delete obj[key];
+			}
+		});
+		return obj;
+	};
+
 	const clickSubmit = () => {
 		const user = {
 			name: values.name || undefined,
 			email: values.email || undefined,
 			password: values.password || undefined,
 		};
+
 		update(
 			{ userId: match.params.userId },
 			{
 				t: jwt.token,
 			},
-			user
+			checkUndefined(user)
 		).then((data) => {
 			if (data && data.error) {
 				setValues({ ...values, error: data.error });

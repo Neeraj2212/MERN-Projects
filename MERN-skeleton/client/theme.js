@@ -7,18 +7,24 @@ const theme = createMuiTheme({
 	},
 	palette: {
 		primary: {
-			light: "#5c67a3",
-			main: "#3f4771",
-			dark: "#2e355b",
+			main: "#1976d2",
 			contrastText: "#fff",
 		},
-		secondary: {
-			light: "#ff79b0",
-			main: "#ff4081",
-			dark: "#c60055",
-			contrastText: "#000",
-		},
-		openTitle: "#3f4771",
+		// },
+		// palette: {
+		// 	primary: {
+		// 		light: "#5c67a3",
+		// 		main: "#3f4771",
+		// 		dark: "#2e355b",
+		// 		contrastText: "#fff",
+		// 	},
+		// 	secondary: {
+		// 		light: "#ff79b0",
+		// 		main: "#ff4081",
+		// 		dark: "#c60055",
+		// 		contrastText: "#000",
+		// 	},
+
 		protectedTitle: pink["400"],
 		type: "light",
 	},

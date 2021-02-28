@@ -54,7 +54,10 @@ const update = async (req, res) => {
 	try {
 		let user = req.profile;
 		user = extend(user, req.body);
+		console.log(user);
 		await user.save();
+		console.log("\n After \n");
+		console.log(user);
 		user.password = undefined;
 		res.json(user);
 	} catch (err) {
