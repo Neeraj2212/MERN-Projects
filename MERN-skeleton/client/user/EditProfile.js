@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
 	Card,
 	CardContent,
@@ -13,11 +14,14 @@ import {
 	Divider,
 	DialogActions,
 } from "@material-ui/core";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { create } from "./api-user";
+
+import red from "@material-ui/core/colors/red";
+
 import { makeStyles } from "@material-ui/core/styles";
+import { Link, Redirect } from "react-router-dom";
 import theme from "./../theme";
+import auth from "./../auth/auth-helper";
+import { read, update } from "./api-user";
 
 const useStyles = makeStyles({
 	card: {
@@ -32,7 +36,7 @@ const useStyles = makeStyles({
 	},
 	title: {
 		marginTop: theme.spacing(2),
-		color: theme.palette.openTitle,
+		color: red[500],
 	},
 	textField: {
 		marginLeft: theme.spacing(1),
@@ -51,7 +55,7 @@ const useStyles = makeStyles({
 	},
 });
 
-const Signup = () => {
+const EditProfile = ({ match }) => {
 	const [values, setValues] = useState({
 		name: "",
 		password: "",
@@ -60,33 +64,67 @@ const Signup = () => {
 		error: "",
 	});
 
-	const classes = useStyles();
+	const jwt = auth.isAuthenticated();
 
-	const clickSubmit = () => {
-		const user = {
-			name: values.name || undefined,
-			password: values.password || undefined,
-			email: values.email || undefined,
-		};
-		create(user).then((data) => {
-			if (data.error) {
+	useEffect(() => {
+		const abortController = new AbortController();
+		const signal = abortController.signal;
+
+		read(
+			{
+				userId: match.params.userId,
+			},
+			{ t: jwt.token },
+			signal
+		).then((data) => {
+			// console.log(data);
+			if (data && data.error) {
 				setValues({ ...values, error: data.error });
 			} else {
-				setValues({ ...values, error: "", open: true });
+				setValues({ ...values, name: data.name, email: data.email });
 			}
 		});
-	};
+		return function cleanup() {
+			abortController.abort();
+		};
+	}, [match.params.userId]);
 
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, [name]: event.target.value });
 	};
+
+	const clickSubmit = () => {
+		const user = {
+			name: values.name || undefined,
+			email: values.email || undefined,
+			password: values.password || undefined,
+		};
+		update(
+			{ userId: match.params.userId },
+			{
+				t: jwt.token,
+			},
+			user
+		).then((data) => {
+			if (data && data.error) {
+				setValues({ ...values, error: data.error });
+			} else {
+				setValues({ ...values, userId: data._id, open: true });
+			}
+		});
+	};
+
+	if (values.redirectToProfile) {
+		<Redirect to={"/user/" + values.userId} />;
+	}
+	const classes = useStyles();
 	return (
-		<>
+		<div>
 			<form autoComplete="off">
 				<Card className={classes.card}>
 					<CardContent className={classes.cardContent}>
 						<Typography variant="h4" className={classes.title}>
-							Sign Up
+							Edit Profile
 						</Typography>
 
 						<TextField
@@ -144,21 +182,19 @@ const Signup = () => {
 					<DialogTitle>New Account</DialogTitle>
 					<Divider />
 					<DialogContent>
-						<DialogContentText>
-							New account successfully created.
-						</DialogContentText>
+						<DialogContentText>Profile Updated Successfully.</DialogContentText>
 					</DialogContent>
 					<DialogActions>
-						<Link to="/signin">
+						<Link to={"/user/" + match.params.userId}>
 							<Button color="primary" autoFocus="autoFocus" variant="contained">
-								Sign In
+								Profile
 							</Button>
 						</Link>
 					</DialogActions>
 				</Dialog>
 			</form>
-		</>
+		</div>
 	);
 };
 
-export default Signup;
+export default EditProfile;
