@@ -15,10 +15,10 @@ import auth from "./../auth/auth-helper";
 const isActive = (history, path) => {
 	if (history.location.pathname == path)
 		return {
-			borderBottom: `3px solid floralwhite`,
-			color: "#fff",
+			borderBottom: `3px solid #ffffff`,
+			color: "#ffffff",
 		};
-	else return { color: "#fff" };
+	else return { color: "#ffffff" };
 };
 
 const Menu = withRouter(({ history }) => {
@@ -27,11 +27,14 @@ const Menu = withRouter(({ history }) => {
 			<Toolbar>
 				<Typography>MERN SKELETON</Typography>
 				<Link to="/">
-					<IconButton aria-label="Home" style={isActive(history, "/")}>
+					<IconButton
+						aria-label="Home"
+						style={{ ...isActive(history, "/"), marginLeft: `10px` }}
+					>
 						<HomeIcon />
 					</IconButton>
 				</Link>
-				<div style={{ marginLeft: `auto`, marginRight: `20px` }}>
+				<div style={{ marginLeft: `auto` }}>
 					<Link to="/users">
 						<Button style={isActive(history, "/users")}>Users</Button>
 					</Link>
