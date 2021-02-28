@@ -16,6 +16,7 @@ import {
 	Avatar,
 } from "@material-ui/core";
 import { Person, Edit } from "@material-ui/icons";
+import DeleteUser from "./DeleteUser";
 import theme from "./../theme";
 
 const useStyles = makeStyles({
@@ -85,7 +86,7 @@ function Profile({ match }) {
 										<Edit />
 									</IconButton>
 								</Link>
-								{/* <DeleteUser userId={user._id} /> */}
+								<DeleteUser userId={user._id} />
 							</ListItemSecondaryAction>
 						)}
 				</ListItem>

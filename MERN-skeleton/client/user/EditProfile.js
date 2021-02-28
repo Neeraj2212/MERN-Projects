@@ -179,7 +179,7 @@ const EditProfile = ({ match }) => {
 					</CardActions>
 				</Card>
 				<Dialog open={values.open} disableBackdropClick={true}>
-					<DialogTitle>New Account</DialogTitle>
+					<DialogTitle>Profile</DialogTitle>
 					<Divider />
 					<DialogContent>
 						<DialogContentText>Profile Updated Successfully.</DialogContentText>
