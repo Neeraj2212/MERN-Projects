@@ -10,7 +10,8 @@ mongoose
 		useCreateIndex: true,
 		useUnifiedTopology: true,
 	})
-	.then((res) => console.log("Database connected successfully"));
+	.then((res) => console.log("Database connected successfully"))
+	.catch((err) => console.log(err));
 
 mongoose.connection.on("error", () => {
 	throw new Error(`unable to connect to database `);

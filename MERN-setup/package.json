@@ -2,9 +2,8 @@
 	"name": "mern-simple-setup",
 	"version": "1.0.0",
 	"description": "Simple setup for MERN Application",
-	
 	"homepage": "https://github.com/shamahoque/mern-marketplace",
-  "main": "./dist/server.generated.js",
+	"main": "./dist/server.generated.js",
 	"author": "Neeraj Patil",
 	"license": "MIT",
 	"private": true,
@@ -15,6 +14,7 @@
 	},
 	"dependencies": {
 		"@hot-loader/react-dom": "16.13.0",
+		"dotenv": "^9.0.2",
 		"express": "4.17.1",
 		"mongodb": "3.5.5",
 		"react": "16.13.1",

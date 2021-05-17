@@ -9,7 +9,7 @@
 	"scripts": {
 		"development": "nodemon",
 		"build": "webpack --config webpack.config.client.production.js && webpack --mode=production --config webpack.config.server.js",
-		"start": "NODE_ENV=production node ./dist/server.generated.js"
+		"start": "node ./dist/server.generated.js"
 	},
 	"devDependencies": {
 		"@babel/core": "7.9.0",
@@ -32,11 +32,13 @@
 		"compression": "^1.7.4",
 		"cookie-parser": "^1.4.5",
 		"cors": "^2.8.5",
+		"dotenv": "^9.0.2",
 		"express": "^4.17.1",
 		"express-jwt": "^6.0.0",
 		"file-loader": "^6.2.0",
 		"helmet": "^4.4.1",
 		"jsonwebtoken": "^8.5.1",
+		"lodash": "^4.17.21",
 		"mongoose": "^5.11.8",
 		"react": "16.13.1",
 		"react-dom": "16.13.1",

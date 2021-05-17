@@ -2,12 +2,13 @@ import path from "path";
 import express from "express";
 import { MongoClient } from "mongodb";
 import template from "./../template";
+require("dotenv").config();
 //comment out before building for production
-import devBundle from "./devBundle";
+// import devBundle from "./devBundle";
 
 const app = express();
 //comment out before building for production
-devBundle.compile(app);
+// devBundle.compile(app);
 
 //to return static files from the dist folder when
 // the requested route starts with /dist.
